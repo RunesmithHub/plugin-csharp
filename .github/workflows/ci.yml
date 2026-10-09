@@ -84,9 +84,8 @@ jobs:
           global-json-file: global.json
 
       - name: Install the hub tool
-        run: >-
-          dotnet tool install RunesmithHub.Tool --version 0.1.2 --add-source https://nuget.runesmith.dev/index.json
-          --tool-path "$RUNNER_TEMP/rshub"
+        # The repository's NuGet configuration maps RunesmithHub.* to the hub feed; --add-source cannot be combined with that mapping.
+        run: dotnet tool install RunesmithHub.Tool --version 0.1.2 --tool-path "$RUNNER_TEMP/rshub"
 
       - name: Check the plugin as the hub does
         run: '"$RUNNER_TEMP/rshub/rshub" check .'
