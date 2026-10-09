@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sdks\Fixtures\*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Runesmith.CSharp\Runesmith.CSharp.csproj" />
+    <!-- The plugin leaves out the libraries Runesmith provides; the tests need their own copies. -->
+    <PackageReference Include="Runesmith.Sdk" />
+    <PackageReference Include="Runesmith.Text" />
+    <PackageReference Include="Runesmith.LanguageServices" />
+  </ItemGroup>
+</Project>

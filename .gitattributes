@@ -1,0 +1,3 @@
+# Text files are checked out with LF everywhere, as .editorconfig asks, so tests that read repository files see the same bytes on Windows.
+# Git tells text from binary files by their content.
+* text=auto eol=lf

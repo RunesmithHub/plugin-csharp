@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>C# support for Runesmith: the language, the C# analyzer, the dotnet build provider and the .NET SDK provider.</Description>
+    <!-- A plugin carries its own libraries, such as the compiler, in its folder. -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Runesmith.CSharp.Contracts\Runesmith.CSharp.Contracts.csproj" />
+    <!-- Runesmith supplies these when it loads the plugin, so they are not copied next to it. -->
+    <PackageReference Include="Runesmith.Sdk" ExcludeAssets="runtime" />
+    <PackageReference Include="Runesmith.Text" ExcludeAssets="runtime" />
+    <PackageReference Include="Runesmith.LanguageServices" ExcludeAssets="runtime" />
+    <PackageReference Include="Runesmith.Languages.CSharp" />
+    <!-- Its build host, which loads projects for the analyzer, is content that only a direct reference copies to the output. -->
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Runesmith.CSharp.Tests" />
+  </ItemGroup>
+</Project>

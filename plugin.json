@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "runesmith.csharp",
+  "name": "C#",
+  "version": "0.1.0",
+  "summary": "C# highlighting, completion, navigation and problems, building and running with dotnet, and .NET SDK downloads.",
+  "authors": [
+    "Dylan de Beer"
+  ],
+  "license": "Apache-2.0",
+  "repository": "https://github.com/RunesmithHub/plugin-csharp",
+  "homepage": "https://runesmithhub.github.io/Runesmith/plugins/csharp",
+  "runesmithApi": "^0.1.0",
+  "projects": {
+    "contracts": "src/Runesmith.CSharp.Contracts/Runesmith.CSharp.Contracts.csproj",
+    "implementation": "src/Runesmith.CSharp/Runesmith.CSharp.csproj"
+  },
+  "capabilities": [
+    {
+      "id": "network",
+      "reason": "Downloads the .NET SDKs you choose to install."
+    },
+    {
+      "id": "process",
+      "reason": "Runs dotnet to build, run and test your projects, and to load them for the C# analyzer."
+    },
+    {
+      "id": "filesystem",
+      "reason": "Reads your projects' build files and keeps the .NET SDKs it installs."
+    },
+    {
+      "id": "environment",
+      "reason": "Finds the .NET SDKs on your PATH and in DOTNET_ROOT."
+    },
+    {
+      "id": "native",
+      "reason": "The MSBuild library the C# analyzer uses to load your projects calls into the operating system."
+    },
+    {
+      "id": "dynamic-code",
+      "reason": "The C# compiler services it hosts load their own components when they start."
+    }
+  ],
+  "networkHosts": [
+    "builds.dotnet.microsoft.com"
+  ],
+  "icon": "icon.png",
+  "categories": [
+    "Languages",
+    "Build and run"
+  ],
+  "keywords": [
+    "csharp",
+    "dotnet",
+    "roslyn"
+  ]
+}

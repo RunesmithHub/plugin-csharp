@@ -1,0 +1,1 @@
+M:Avalonia.Threading.DispatcherTimer.#ctor(System.TimeSpan,Avalonia.Threading.DispatcherPriority,System.EventHandler);Starts the timer at once, and the UI thread keeps a running timer and its handler alive, with everything the handler reaches. Create the timer with an initializer, add the Tick handler, and call Start where it should run.
