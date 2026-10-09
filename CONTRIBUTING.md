@@ -21,7 +21,7 @@ The plugin is released through the Runesmith Plugin Hub, which builds, packages 
 request:
 
 ```sh
-dotnet tool install --global RunesmithHub.Tool --version 0.1.1
+dotnet tool install --global RunesmithHub.Tool --version 0.1.2
 rshub check .
 ```
 

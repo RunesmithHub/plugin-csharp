@@ -85,7 +85,7 @@ jobs:
 
       - name: Install the hub tool
         run: >-
-          dotnet tool install RunesmithHub.Tool --version 0.1.1 --add-source https://nuget.runesmith.dev/index.json
+          dotnet tool install RunesmithHub.Tool --version 0.1.2 --add-source https://nuget.runesmith.dev/index.json
           --tool-path "$RUNNER_TEMP/rshub"
 
       - name: Check the plugin as the hub does
