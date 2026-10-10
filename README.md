@@ -10,7 +10,7 @@ The official C# plugin for [Runesmith](https://github.com/RunesmithHub/Runesmith
 - finding the .NET SDKs on your computer, and downloading new ones from Microsoft's release metadata, checked against their SHA-512
   checksums.
 
-The [C# documentation](https://runesmithhub.github.io/Runesmith/plugins/csharp) covers every feature, how projects are found and what the
+The [C# documentation](https://docs.runesmith.dev/plugins/csharp) covers every feature, how projects are found and what the
 analyzer does not do yet.
 
 ## Capabilities
@@ -43,7 +43,7 @@ dotnet test --solution plugin-csharp.slnx
 
 ## Documentation
 
-Runesmith's documentation, including how plugins work and how to write one, is at https://runesmithhub.github.io/Runesmith/.
+Runesmith's documentation, including how plugins work and how to write one, is at https://docs.runesmith.dev.
 
 ## License
 
