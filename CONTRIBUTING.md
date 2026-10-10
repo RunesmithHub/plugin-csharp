@@ -13,6 +13,8 @@ dotnet format plugin-csharp.slnx --verify-no-changes
 dotnet test --solution plugin-csharp.slnx
 ```
 
+The C# analyzer is part of the plugin: its code is in `src/Runesmith.CSharp/Engine` and its tests in `tests/Runesmith.CSharp.Tests/Engine`.
+
 `dotnet format plugin-csharp.slnx` fixes the formatting. When you change a package reference, commit the updated `packages.lock.json` files.
 
 ## Check the release

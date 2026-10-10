@@ -50,6 +50,9 @@ dotnet format plugin-csharp.slnx --verify-no-changes
 dotnet test --solution plugin-csharp.slnx
 ```
 
+The C# analyzer, the engine behind completion, navigation, problems and the other editor features, lives in this repository, in
+`src/Runesmith.CSharp/Engine`, with its tests in `tests/Runesmith.CSharp.Tests/Engine`.
+
 The test that downloads netcoredbg and debugs a console app runs only with `RUNESMITH_TEST_DEBUGGER=1` set.
 
 `dotnet build src/Runesmith.CSharp -t:InstallPlugin` installs your build into Runesmith's plugins folder; restart Runesmith to load it.
@@ -60,5 +63,5 @@ Runesmith's documentation, including how plugins work and how to write one, is a
 
 ## License
 
-Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE); [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) covers netcoredbg, which the
-plugin downloads.
+Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE); [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) covers the C# compiler
+libraries the analyzer is built on, and netcoredbg, which the plugin downloads.

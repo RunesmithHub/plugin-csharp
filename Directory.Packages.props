@@ -10,7 +10,6 @@
     <PackageVersion Include="Runesmith.Sdk" Version="0.1.1" />
     <PackageVersion Include="Runesmith.Text" Version="0.1.1" />
     <PackageVersion Include="Runesmith.LanguageServices" Version="0.1.1" />
-    <PackageVersion Include="Runesmith.Languages.CSharp" Version="0.1.1" />
     <PackageVersion Include="HammerUI" Version="0.1.0" />
   </ItemGroup>
   <ItemGroup Label="User interface">

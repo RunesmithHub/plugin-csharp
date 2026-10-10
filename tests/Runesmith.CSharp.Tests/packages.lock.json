@@ -394,10 +394,11 @@
       "runesmith.csharp": {
         "type": "Project",
         "dependencies": {
+          "Microsoft.CodeAnalysis.CSharp.Features": "[5.9.0, )",
+          "Microsoft.CodeAnalysis.CSharp.Workspaces": "[5.9.0, )",
           "Microsoft.CodeAnalysis.Workspaces.MSBuild": "[5.9.0, )",
           "Runesmith.CSharp.Contracts": "[0.1.1, )",
           "Runesmith.LanguageServices": "[0.1.1, )",
-          "Runesmith.Languages.CSharp": "[0.1.1, )",
           "Runesmith.Sdk": "[0.1.1, )",
           "Runesmith.Text": "[0.1.1, )"
         }
@@ -507,25 +508,6 @@
         "contentHash": "+24lC4plfbEDNfLAdTV/SWKS7dW+16X4HdydO3R++134kSNTzcbYA4KpR1Hdh6uWisB8Za3AzwyOn+K+NxWIug==",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.12"
-        }
-      },
-      "Runesmith.Languages.CSharp": {
-        "type": "CentralTransitive",
-        "requested": "[0.1.1, )",
-        "resolved": "0.1.1",
-        "contentHash": "aR0ByS0dTvLa3zabhC1Ym0Usfk6T+4m9VaMI7M1v5UEH6fQCZrxf77rWA3I6fmhqX6CSeePiziHSnpPts6F5ug==",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.CSharp": "5.9.0",
-          "Microsoft.CodeAnalysis.CSharp.Features": "5.9.0",
-          "Microsoft.CodeAnalysis.CSharp.Workspaces": "5.9.0",
-          "Microsoft.CodeAnalysis.Workspaces.MSBuild": "5.9.0",
-          "Microsoft.Extensions.Logging.Abstractions": "10.0.12",
-          "Runesmith.LanguageServices": "0.1.1",
-          "System.Composition.AttributedModel": "10.0.12",
-          "System.Composition.Convention": "10.0.12",
-          "System.Composition.Hosting": "10.0.12",
-          "System.Composition.Runtime": "10.0.12",
-          "System.Composition.TypedParts": "10.0.12"
         }
       },
       "System.Composition.AttributedModel": {

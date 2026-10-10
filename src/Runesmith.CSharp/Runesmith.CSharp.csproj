@@ -10,7 +10,8 @@
     <PackageReference Include="Runesmith.Sdk" ExcludeAssets="runtime" />
     <PackageReference Include="Runesmith.Text" ExcludeAssets="runtime" />
     <PackageReference Include="Runesmith.LanguageServices" ExcludeAssets="runtime" />
-    <PackageReference Include="Runesmith.Languages.CSharp" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
     <!-- Its build host, which loads projects for the analyzer, is content that only a direct reference copies to the output. -->
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" />
   </ItemGroup>
