@@ -10,7 +10,7 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <RestoreLockedMode Condition="'$(CI)' == 'true'">true</RestoreLockedMode>
     <IsPackable>false</IsPackable>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <Authors>Dylan de Beer</Authors>
     <Product>Runesmith</Product>
     <Copyright>Copyright 2026 Dylan de Beer</Copyright>

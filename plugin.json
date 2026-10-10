@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "runesmith.csharp",
   "name": "C#",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "summary": "C# highlighting, completion, navigation and problems, building, running and debugging with dotnet, and SDK downloads.",
   "authors": [
     "Dylan de Beer"
