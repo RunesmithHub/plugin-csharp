@@ -64,6 +64,7 @@ internal static class TestArchives
 internal sealed class FakeHttp : HttpMessageHandler
 {
     private readonly Dictionary<string, byte[]> responses = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, string> redirects = new(StringComparer.Ordinal);
 
     public List<string> Requests { get; } = [];
 
@@ -75,6 +76,12 @@ internal sealed class FakeHttp : HttpMessageHandler
 
     public FakeHttp Serve(string uri, string content) => Serve(uri, Encoding.UTF8.GetBytes(content));
 
+    public FakeHttp Redirect(string uri, string location)
+    {
+        redirects[uri] = location;
+        return this;
+    }
+
     public HttpClient Client() => new(this);
 
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -82,6 +89,8 @@ internal sealed class FakeHttp : HttpMessageHandler
         var uri = request.RequestUri!.ToString();
         lock (Requests)
             Requests.Add(uri);
+        if (redirects.TryGetValue(uri, out var location))
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.Found) { Headers = { Location = new Uri(location) } });
         return Task.FromResult(responses.TryGetValue(uri, out var content)
             ? new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(content) }
             : new HttpResponseMessage(HttpStatusCode.NotFound));

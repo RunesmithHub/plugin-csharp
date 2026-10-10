@@ -3,14 +3,14 @@
   "id": "runesmith.csharp",
   "name": "C#",
   "version": "0.1.0",
-  "summary": "C# highlighting, completion, navigation and problems, building and running with dotnet, and .NET SDK downloads.",
+  "summary": "C# highlighting, completion, navigation and problems, building, running and debugging with dotnet, and SDK downloads.",
   "authors": [
     "Dylan de Beer"
   ],
   "license": "Apache-2.0",
   "repository": "https://github.com/RunesmithHub/plugin-csharp",
   "homepage": "https://docs.runesmith.dev/plugins/csharp",
-  "runesmithApi": "^0.1.0",
+  "runesmithApi": "^0.1.1",
   "projects": {
     "contracts": "src/Runesmith.CSharp.Contracts/Runesmith.CSharp.Contracts.csproj",
     "implementation": "src/Runesmith.CSharp/Runesmith.CSharp.csproj"
@@ -18,11 +18,11 @@
   "capabilities": [
     {
       "id": "network",
-      "reason": "Downloads the .NET SDKs you choose to install."
+      "reason": "Downloads the .NET SDKs you choose to install, and the netcoredbg debugger from GitHub the first time you debug."
     },
     {
       "id": "process",
-      "reason": "Runs dotnet to build, run and test your projects, and to load them for the C# analyzer."
+      "reason": "Runs dotnet to build, run and test your projects and to load them for the C# analyzer, and starts netcoredbg to debug them."
     },
     {
       "id": "filesystem",
@@ -42,16 +42,21 @@
     }
   ],
   "networkHosts": [
-    "builds.dotnet.microsoft.com"
+    "builds.dotnet.microsoft.com",
+    "github.com",
+    "release-assets.githubusercontent.com"
   ],
   "icon": "icon.png",
   "categories": [
     "Languages",
-    "Build and run"
+    "Build and run",
+    "Debugging"
   ],
   "keywords": [
     "csharp",
     "dotnet",
-    "roslyn"
+    "roslyn",
+    "debugger",
+    "netcoredbg"
   ]
 }

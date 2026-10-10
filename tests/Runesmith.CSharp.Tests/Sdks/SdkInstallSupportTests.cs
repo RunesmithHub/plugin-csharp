@@ -82,6 +82,38 @@ public sealed class SdkInstallSupportTests : IDisposable
             Assert.True(File.GetUnixFileMode(Path.Combine(target, "dotnet")).HasFlag(UnixFileMode.UserExecute));
     }
 
+    public static TheoryData<string, byte[]> UnsafeArchives => new()
+    {
+        { "tar.gz", TestArchives.TarGz(new ArchiveEntry("tool/run", "#!"), new ArchiveEntry("../outside.txt", "nope")) },
+        { "tar.gz", TestArchives.TarGz(new ArchiveEntry("tool/run", "#!"), new ArchiveEntry("tool/../../outside.txt", "nope")) },
+        { "tar.gz", TestArchives.TarGz(new ArchiveEntry("tool/run", "#!"), new ArchiveEntry("tool/escape") { LinkTarget = "../../outside.txt" }) },
+        { "zip", TestArchives.Zip(new ArchiveEntry("tool/run", "#!"), new ArchiveEntry("../outside.txt", "nope")) },
+    };
+
+    [Theory]
+    [MemberData(nameof(UnsafeArchives))]
+    public void RefusesAnEntryOutsideTheTargetWhenAsked(string kind, byte[] data)
+    {
+        var archive = Write("tool." + kind, data);
+        var target = Path.Combine(folder, "strict", "out");
+
+        Assert.Throws<InvalidDataException>(() => SdkArchives.Extract(archive, target, TestContext.Current.CancellationToken, refuseUnsafeEntries: true));
+
+        Assert.False(File.Exists(Path.Combine(folder, "strict", "outside.txt")));
+        Assert.False(new FileInfo(Path.Combine(target, "tool", "escape")).Exists);
+    }
+
+    [Fact]
+    public void UnpacksASafeArchiveWhenRefusingUnsafeEntries()
+    {
+        var archive = Write("tool.tar.gz", TestArchives.TarGz(new ArchiveEntry("tool/run", "#!", TestArchives.Executable), new ArchiveEntry("tool/./lib.dll", "dll")));
+        var target = Path.Combine(folder, "safe");
+
+        SdkArchives.Extract(archive, target, TestContext.Current.CancellationToken, refuseUnsafeEntries: true);
+
+        Assert.Equal("dll", File.ReadAllText(Path.Combine(target, "tool", "lib.dll")));
+    }
+
     [Fact]
     public void RejectsFilesThatAreNotArchives() =>
         Assert.Throws<InvalidDataException>(() => SdkArchives.Extract(Write("page.html", Encoding.UTF8.GetBytes("<html>")), Path.Combine(folder, "x"), TestContext.Current.CancellationToken));
