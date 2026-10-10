@@ -7,6 +7,7 @@ The official C# plugin for [Runesmith](https://github.com/RunesmithHub/Runesmith
   analyzer, built on the C# compiler and shipped with the plugin;
 - **Build** with `dotnet build`, with every error and warning in the **Problems** panel;
 - run configurations for .NET projects, .NET tests and any `dotnet` command;
+- debugging .NET projects with [netcoredbg](https://github.com/Samsung/netcoredbg), which it downloads the first time you debug;
 - finding the .NET SDKs on your computer, and downloading new ones from Microsoft's release metadata, checked against their SHA-512
   checksums.
 
@@ -17,12 +18,22 @@ analyzer does not do yet.
 
 | Capability | Why |
 | --- | --- |
-| `network` | Downloads the .NET SDKs you choose to install, from `builds.dotnet.microsoft.com`. |
-| `process` | Runs `dotnet` to build, run and test your projects, and to load them for the C# analyzer. |
+| `network` | Downloads the .NET SDKs you choose to install, from `builds.dotnet.microsoft.com`, and netcoredbg the first time you debug, from `github.com` and `release-assets.githubusercontent.com`. |
+| `process` | Runs `dotnet` to build, run and test your projects and to load them for the C# analyzer, and starts netcoredbg to debug them. |
 | `filesystem` | Reads your projects' build files and keeps the .NET SDKs it installs. |
 | `environment` | Finds the .NET SDKs on your `PATH` and in `DOTNET_ROOT`. |
 | `native` | The MSBuild library the C# analyzer uses to load your projects calls into the operating system. |
 | `dynamic-code` | The C# compiler services it hosts load their own components when they start. |
+
+## Debugging
+
+**Debug** in the run widget, on a .NET project configuration, builds the project and starts its assembly under netcoredbg, Samsung's .NET
+debugger. The first time you debug, the plugin downloads netcoredbg 3.2.0-1092 from its GitHub release page, checks the download against
+the SHA-256 checksum pinned in `src/Runesmith.CSharp/Debugging/NetcoredbgRelease.cs`, and keeps it in the plugin's storage folder, in
+`tools/netcoredbg/<version>/<platform>`. It is available for Linux x64 and Arm64, Windows x64 and macOS on Apple silicon.
+
+netcoredbg is MIT licensed. The plugin downloads it rather than ships it, so its license notice is in this repository's
+[THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) rather than in the plugin package.
 
 ## Install
 
@@ -39,6 +50,8 @@ dotnet format plugin-csharp.slnx --verify-no-changes
 dotnet test --solution plugin-csharp.slnx
 ```
 
+The test that downloads netcoredbg and debugs a console app runs only with `RUNESMITH_TEST_DEBUGGER=1` set.
+
 `dotnet build src/Runesmith.CSharp -t:InstallPlugin` installs your build into Runesmith's plugins folder; restart Runesmith to load it.
 
 ## Documentation
@@ -47,4 +60,5 @@ Runesmith's documentation, including how plugins work and how to write one, is a
 
 ## License
 
-Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE); [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) covers netcoredbg, which the
+plugin downloads.
