@@ -29,16 +29,16 @@
       },
       "Runesmith.Languages.CSharp": {
         "type": "Direct",
-        "requested": "[0.1.0, )",
-        "resolved": "0.1.0",
-        "contentHash": "7iAI37GkMQVPvpjTUDWIyH/91ZdwASZBdwRkDct82JkRyc7v5FCEm3zARIY1BcJfUwhGXubF22JsjemN1uyqrA==",
+        "requested": "[0.1.1, )",
+        "resolved": "0.1.1",
+        "contentHash": "aR0ByS0dTvLa3zabhC1Ym0Usfk6T+4m9VaMI7M1v5UEH6fQCZrxf77rWA3I6fmhqX6CSeePiziHSnpPts6F5ug==",
         "dependencies": {
           "Microsoft.CodeAnalysis.CSharp": "5.9.0",
           "Microsoft.CodeAnalysis.CSharp.Features": "5.9.0",
           "Microsoft.CodeAnalysis.CSharp.Workspaces": "5.9.0",
           "Microsoft.CodeAnalysis.Workspaces.MSBuild": "5.9.0",
           "Microsoft.Extensions.Logging.Abstractions": "10.0.12",
-          "Runesmith.LanguageServices": "0.1.0",
+          "Runesmith.LanguageServices": "0.1.1",
           "System.Composition.AttributedModel": "10.0.12",
           "System.Composition.Convention": "10.0.12",
           "System.Composition.Hosting": "10.0.12",
@@ -48,31 +48,31 @@
       },
       "Runesmith.LanguageServices": {
         "type": "Direct",
-        "requested": "[0.1.0, )",
-        "resolved": "0.1.0",
-        "contentHash": "XTuhKjDtqiyHpeNsx3LUEzB4KwfWGV2DybrCRhrm2toN6/3rmfKBdOsBqn+oN13t7FTjrx1AS9EV1QBe43oC7Q==",
+        "requested": "[0.1.1, )",
+        "resolved": "0.1.1",
+        "contentHash": "lAidGbWmr5zebKTPuB3OdtuSXVcEEt+U5HAdMg0C/lkBpHWelmPfhfieQKC0UmD3DwKYI0nt0+WJlYFeFKYKCQ==",
         "dependencies": {
-          "Runesmith.Text": "0.1.0"
+          "Runesmith.Text": "0.1.1"
         }
       },
       "Runesmith.Sdk": {
         "type": "Direct",
-        "requested": "[0.1.0, )",
-        "resolved": "0.1.0",
-        "contentHash": "Rt0Brc8dOQdja3ndVA8CvWKFZ8N7LcuNeCLF8eh38A/WAFt1wXE5la2frtjiZVT3JjTZnu1tZ4ugP5wXSKAAlA==",
+        "requested": "[0.1.1, )",
+        "resolved": "0.1.1",
+        "contentHash": "1/yvFfhirxi5swrKkQYuVZCnrCXsGbtL8NR3ZioOtV297mUqq1Wuf+Sx2DZ8uYgMxMaQWQxzEX4EsE9SdcBr8Q==",
         "dependencies": {
           "Avalonia": "12.1.3",
           "Avalonia.Fonts.Inter": "12.1.3",
           "HammerUI": "0.1.0",
-          "Runesmith.Text": "0.1.0",
+          "Runesmith.Text": "0.1.1",
           "System.Composition.AttributedModel": "10.0.12"
         }
       },
       "Runesmith.Text": {
         "type": "Direct",
-        "requested": "[0.1.0, )",
-        "resolved": "0.1.0",
-        "contentHash": "VwpQ1ToRaFEFE/eGrP+Yg/yN7L/f7BR8G6YvCcxl7H34iPiTwkc5o8+joWgRqerqVL1mfO+xCXmUxr4fMYAU2g=="
+        "requested": "[0.1.1, )",
+        "resolved": "0.1.1",
+        "contentHash": "uMSDzM4A/BO5H+TXesjC161jm+heVXPmDJ9KM7veCQRGLZJpIlLvsmt0z955VwpKKbFWL2+gH6cXPMmDvMAKcg=="
       },
       "Avalonia.BuildServices": {
         "type": "Transitive",
