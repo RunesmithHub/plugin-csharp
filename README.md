@@ -5,6 +5,8 @@ The official C# plugin for [Runesmith](https://github.com/RunesmithHub/Runesmith
 - C# highlighting for `.cs` and `.csx` files;
 - completion, hover, go to definition, signature help, problems, quick fixes, rename, formatting and inlay hints from Runesmith's own C#
   analyzer, built on the C# compiler and shipped with the plugin;
+- find references, go to implementation, the occurrences of the name under the caret, the outline and breadcrumbs, go to symbol in the
+  file and in the folder, folding, expand selection, call and type hierarchies, and names colored by what they mean;
 - **Build** with `dotnet build`, with every error and warning in the **Problems** panel;
 - run configurations for .NET projects, .NET tests and any `dotnet` command;
 - debugging .NET projects with [netcoredbg](https://github.com/Samsung/netcoredbg), which it downloads the first time you debug;
@@ -56,6 +58,12 @@ The C# analyzer, the engine behind completion, navigation, problems and the othe
 The test that downloads netcoredbg and debugs a console app runs only with `RUNESMITH_TEST_DEBUGGER=1` set.
 
 `dotnet build src/Runesmith.CSharp -t:InstallPlugin` installs your build into Runesmith's plugins folder; restart Runesmith to load it.
+
+## Translations
+
+The plugin's text is in English in `src/Runesmith.CSharp/locales/en/runesmith.csharp.ftl`, a [Fluent](https://projectfluent.org) file.
+Text for a new message goes there, and the code reads it from the generated `Strings` class. A language pack translates the file; see
+[Language packs](https://docs.runesmith.dev/plugins/language-packs).
 
 ## Documentation
 
