@@ -22,6 +22,9 @@ internal static class CSharpStructure
         void Add(int start, int end, FoldingRangeKind kind, string? collapsed = null)
         {
             var (first, last) = (Line(start), Line(end));
+            // A line that goes on after the range, such as "} else {", stays visible.
+            if (kind == FoldingRangeKind.Block && ContinuesAfter(text, end))
+                last--;
             if (last > first)
                 ranges.Add(new FoldingRange(first, last) { Kind = kind, CollapsedText = collapsed });
         }
@@ -92,6 +95,21 @@ internal static class CSharpStructure
         }
 
         return spans;
+    }
+
+    private static bool ContinuesAfter(Microsoft.CodeAnalysis.Text.SourceText text, int end)
+    {
+        var line = text.Lines.GetLineFromPosition(end);
+        for (var i = end; i < line.End; i++)
+        {
+            var character = text[i];
+            if (character == '/' && i + 1 < line.End && text[i + 1] == '/')
+                return false;
+            if (char.IsLetter(character) || character == '{')
+                return true;
+        }
+
+        return false;
     }
 
     private static void AddRegions(SyntaxNode root, Action<int, int, FoldingRangeKind, string?> add)

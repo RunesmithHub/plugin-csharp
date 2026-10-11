@@ -61,6 +61,42 @@ public sealed class StructureTests
     }
 
     [Fact]
+    public async Task AFoldLeavesALineThatGoesOnAfterItVisible()
+    {
+        const string Branches = """
+            class C
+            {
+                int M(int x)
+                {
+                    if (x > 0) {
+                        x++;
+                    } else {
+                        x--;
+                    }
+
+                    try
+                    {
+                        x++;
+                    } catch (System.Exception) {
+                        x--;
+                    }
+
+                    return x;
+                }
+            }
+            """;
+        await using var project = await TestProject.CreateAsync(Files());
+        project.Open("Program.cs", Branches);
+
+        var ranges = await CSharpStructure.FoldingAsync(await project.DocumentAsync("Program.cs"), TestContext.Current.CancellationToken);
+
+        Assert.Contains(ranges, r => (r.StartLine, r.EndLine) == (4, 5));
+        Assert.Contains(ranges, r => (r.StartLine, r.EndLine) == (6, 8));
+        Assert.Contains(ranges, r => (r.StartLine, r.EndLine) == (13, 15));
+        Assert.DoesNotContain(ranges, r => r.StartLine < 6 && r.EndLine == 6 && r.StartLine >= 4);
+    }
+
+    [Fact]
     public async Task WhatFitsOnOneLineDoesNotFold()
     {
         await using var project = await TestProject.CreateAsync(Files());
