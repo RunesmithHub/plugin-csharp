@@ -16,7 +16,7 @@ internal static class CSharpEdits
         foreach (var project in after.GetChanges(before).GetProjectChanges())
         {
             if (project.GetAddedDocuments().Any() || project.GetRemovedDocuments().Any())
-                throw new AnalyzerRefusalException("This change adds or removes files, which Runesmith cannot apply yet.");
+                throw new AnalyzerRefusalException(Strings.EditChangesFiles);
 
             foreach (var id in project.GetChangedDocuments(onlyGetDocumentsWithTextChanges: true))
             {

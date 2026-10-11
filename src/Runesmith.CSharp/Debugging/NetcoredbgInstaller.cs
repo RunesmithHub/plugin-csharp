@@ -55,9 +55,9 @@ internal sealed class NetcoredbgInstaller(HttpClient http, string folder)
             try
             {
                 await DownloadAsync(asset.Uri, archive, progress, cancellationToken).ConfigureAwait(false);
-                progress.Report(new SdkInstallProgress("Verifying", null));
+                progress.Report(new SdkInstallProgress(Strings.ProgressVerifying, null));
                 await Checksums.VerifyAsync(archive, asset.Sha256, "SHA-256", cancellationToken).ConfigureAwait(false);
-                progress.Report(new SdkInstallProgress("Unpacking", null));
+                progress.Report(new SdkInstallProgress(Strings.ProgressUnpacking, null));
                 await Task.Run(() => SdkArchives.Extract(archive, staging, cancellationToken, refuseUnsafeEntries: true), cancellationToken).ConfigureAwait(false);
                 var staged = Path.Combine(staging, asset.Executable);
                 if (!File.Exists(staged))
@@ -120,7 +120,7 @@ internal sealed class NetcoredbgInstaller(HttpClient http, string folder)
                 var buffer = new byte[BufferSize];
                 long received = 0;
                 var reported = -1.0;
-                progress.Report(new SdkInstallProgress("Downloading", total is > 0 ? 0 : null));
+                progress.Report(new SdkInstallProgress(Strings.ProgressDownloading, total is > 0 ? 0 : null));
                 int read;
                 while ((read = await source.ReadAsync(buffer, cancellationToken).ConfigureAwait(false)) > 0)
                 {
@@ -133,7 +133,7 @@ internal sealed class NetcoredbgInstaller(HttpClient http, string folder)
                     if (fraction - reported >= 0.01)
                     {
                         reported = fraction;
-                        progress.Report(new SdkInstallProgress("Downloading", fraction));
+                        progress.Report(new SdkInstallProgress(Strings.ProgressDownloading, fraction));
                     }
                 }
             }

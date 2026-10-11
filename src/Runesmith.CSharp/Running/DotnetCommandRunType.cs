@@ -28,22 +28,22 @@ public sealed class DotnetCommandRunType : IRunConfigurationType
 
     public string Id => TypeId;
 
-    public string Name => ".NET command";
+    public string Name => Strings.RunCommandName;
 
     public string Icon => "terminal";
 
-    public string Description => "Runs a dotnet command line in the folder, such as format or ef database update.";
+    public string Description => Strings.RunCommandDescription;
 
-    private static readonly OptionSet Options = new(
+    private static OptionSet Options => new(
     [
-        new Option(Command, "Command", OptionKind.Text)
+        new Option(Command, Strings.OptionCommand, OptionKind.Text)
         {
             IsRequired = true,
             Placeholder = "build --no-incremental",
-            Description = "What follows dotnet; quote an argument that has spaces.",
+            Description = Strings.OptionCommandDescription,
         },
         EnvironmentOption(),
-        WorkingDirectoryOption("The open folder"),
+        WorkingDirectoryOption(Strings.OptionWorkingDirectoryOpenFolder),
         SdkOption(),
     ]);
 
@@ -61,7 +61,7 @@ public sealed class DotnetCommandRunType : IRunConfigurationType
         var values = configuration.Values;
         var arguments = SplitCommandLine(values.Get(Command) ?? "");
         if (arguments is [] or ["dotnet"])
-            throw new InvalidOperationException($"{configuration.Name} has no command. Type one in Run › Edit Configurations.");
+            throw new InvalidOperationException(Strings.RunNoCommand(configuration.Name));
 
         var host = await DotnetHost.ResolveAsync(sdks, values.Get(SdkPath), cancellationToken).ConfigureAwait(false);
         var withoutHost = arguments[0] == "dotnet" ? arguments.Skip(1).ToList() : arguments;

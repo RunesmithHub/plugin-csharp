@@ -30,11 +30,11 @@ public sealed class DotnetTestsRunType : IRunConfigurationType
 
     public string Id => TypeId;
 
-    public string Name => ".NET tests";
+    public string Name => Strings.RunTestsName;
 
     public string Icon => "check-circle";
 
-    public string Description => "Runs a test project's tests with dotnet test, optionally only those a filter selects.";
+    public string Description => Strings.RunTestsDescription;
 
     public Task<OptionSet> GetOptionsAsync(string rootPath, CancellationToken cancellationToken) =>
         Task.Run(() => CreateOptions(FindProjects(rootPath, cancellationToken)), cancellationToken);
@@ -83,11 +83,11 @@ public sealed class DotnetTestsRunType : IRunConfigurationType
 
     internal static OptionSet CreateOptions(IReadOnlyList<DotnetProject> projects) => new(
     [
-        ProjectOption(projects, "The test project."),
-        new Option(Filter, "Filter", OptionKind.Text)
+        ProjectOption(projects, Strings.OptionProjectToTest),
+        new Option(Filter, Strings.OptionFilter, OptionKind.Text)
         {
             Placeholder = "FullyQualifiedName~Parser",
-            Description = "Runs only the tests that match, as dotnet test --filter selects them; empty runs every test.",
+            Description = Strings.OptionFilterDescription,
         },
         ConfigurationOption(),
         SdkOption(),

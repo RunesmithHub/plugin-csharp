@@ -21,41 +21,41 @@ internal static class DotnetRunOptions
 
     /// <summary>Gets the project option: a choice of the projects found, or a file field when none were found yet.</summary>
     public static Option ProjectOption(IReadOnlyList<DotnetProject> projects, string description) => projects.Count > 0
-        ? new Option(Project, "Project", OptionKind.Choice)
+        ? new Option(Project, Strings.OptionProject, OptionKind.Choice)
         {
             Choices = [.. projects.Select(p => new OptionChoice(p.RelativePath, p.Name) { Description = p.RelativePath })],
             Default = projects[0].RelativePath,
             IsRequired = true,
             Description = description,
         }
-        : new Option(Project, "Project", OptionKind.Path)
+        : new Option(Project, Strings.OptionProject, OptionKind.Path)
         {
             PathKind = PathKind.File,
             IsRequired = true,
-            Placeholder = "A .csproj or .fsproj file",
+            Placeholder = Strings.OptionProjectPlaceholder,
             Description = description,
         };
 
-    public static Option ConfigurationOption() => new(Configuration, "Configuration", OptionKind.Choice)
+    public static Option ConfigurationOption() => new(Configuration, Strings.OptionConfiguration, OptionKind.Choice)
     {
         Choices = [new("Debug", "Debug"), new("Release", "Release")],
         Default = "Debug",
     };
 
-    public static Option EnvironmentOption() => new(Environment, "Environment variables", OptionKind.List) { IsKeyValueList = true };
+    public static Option EnvironmentOption() => new(Environment, Strings.OptionEnvironment, OptionKind.List) { IsKeyValueList = true };
 
-    public static Option WorkingDirectoryOption(string placeholder) => new(WorkingDirectory, "Working directory", OptionKind.Path)
+    public static Option WorkingDirectoryOption(string placeholder) => new(WorkingDirectory, Strings.OptionWorkingDirectory, OptionKind.Path)
     {
         PathKind = PathKind.Folder,
         Group = OptionGroup.Advanced,
         Placeholder = placeholder,
     };
 
-    public static Option SdkOption() => new(SdkPath, ".NET SDK", OptionKind.Sdk)
+    public static Option SdkOption() => new(SdkPath, Strings.DotnetSdk, OptionKind.Sdk)
     {
         SdkKind = DotnetSdkProvider.SdkKind,
         Group = OptionGroup.Advanced,
-        Description = "Empty uses the default .NET SDK.",
+        Description = Strings.OptionSdkDescription,
     };
 
     /// <summary>Gets the configuration's project, read from its file, or throws with a message for the user.</summary>
@@ -63,13 +63,13 @@ internal static class DotnetRunOptions
     {
         var value = configuration.Values.Get(Project);
         if (string.IsNullOrWhiteSpace(value))
-            throw new InvalidOperationException($"{configuration.Name} has no project. Choose one in Run › Edit Configurations.");
+            throw new InvalidOperationException(Strings.RunNoProject(configuration.Name));
 
         var path = Path.GetFullPath(Path.Combine(rootPath, value));
         if (!File.Exists(path))
-            throw new InvalidOperationException($"The project {value} of {configuration.Name} does not exist.");
+            throw new InvalidOperationException(Strings.RunProjectMissing(project: value, configuration: configuration.Name));
 
-        return DotnetProjects.Read(path, rootPath) ?? throw new InvalidOperationException($"The project {value} could not be read.");
+        return DotnetProjects.Read(path, rootPath) ?? throw new InvalidOperationException(Strings.RunProjectUnreadable(value));
     }
 
     /// <summary>Gets the build configuration, Debug unless the values say otherwise.</summary>

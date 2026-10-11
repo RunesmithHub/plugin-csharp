@@ -32,11 +32,11 @@ public sealed class DotnetProjectRunType : IRunConfigurationType
 
     public string Id => TypeId;
 
-    public string Name => ".NET project";
+    public string Name => Strings.RunProjectName;
 
     public string Icon => "play";
 
-    public string Description => "Runs a console, desktop or web project with dotnet run.";
+    public string Description => Strings.RunProjectDescription;
 
     public Task<OptionSet> GetOptionsAsync(string rootPath, CancellationToken cancellationToken) =>
         Task.Run(() => CreateOptions(FindProjects(rootPath, cancellationToken)), cancellationToken);
@@ -116,11 +116,11 @@ public sealed class DotnetProjectRunType : IRunConfigurationType
 
     internal static OptionSet CreateOptions(IReadOnlyList<DotnetProject> projects)
     {
-        List<Option> list = [ProjectOption(projects, "The project to run.")];
+        List<Option> list = [ProjectOption(projects, Strings.OptionProjectToRun)];
         if (projects.Count == 0)
         {
-            list.Add(new Option(Framework, "Target framework", OptionKind.Text) { Placeholder = "The project's first framework" });
-            list.Add(new Option(LaunchProfile, "Launch profile", OptionKind.Text) { Placeholder = "The first profile in launchSettings.json" });
+            list.Add(new Option(Framework, Strings.OptionFramework, OptionKind.Text) { Placeholder = Strings.OptionFrameworkPlaceholder });
+            list.Add(new Option(LaunchProfile, Strings.OptionLaunchProfile, OptionKind.Text) { Placeholder = Strings.OptionLaunchProfilePlaceholder });
         }
 
         foreach (var project in projects)
@@ -130,25 +130,29 @@ public sealed class DotnetProjectRunType : IRunConfigurationType
             {
                 List<OptionChoice> frameworks = [.. project.TargetFrameworks.Select(f => new OptionChoice(f, f))];
                 if (frameworks.Count > 1)
-                    frameworks.Insert(0, new OptionChoice("", "Project default") { Description = $"The first framework, {project.TargetFrameworks[0]}." });
-                list.Add(new Option(Framework, "Target framework", OptionKind.Choice) { Choices = frameworks, VisibleWhen = visible });
+                    frameworks.Insert(0, new OptionChoice("", Strings.OptionFrameworkDefault) { Description = Strings.OptionFrameworkDefaultDescription(project.TargetFrameworks[0]) });
+                list.Add(new Option(Framework, Strings.OptionFramework, OptionKind.Choice) { Choices = frameworks, VisibleWhen = visible });
             }
 
             if (project.LaunchProfiles.Count > 0)
             {
-                list.Add(new Option(LaunchProfile, "Launch profile", OptionKind.Choice)
+                list.Add(new Option(LaunchProfile, Strings.OptionLaunchProfile, OptionKind.Choice)
                 {
-                    Choices = [new OptionChoice("", "None") { Description = "Run without a launch profile." }, .. project.LaunchProfiles.Select(p => new OptionChoice(p, p))],
+                    Choices =
+                    [
+                        new OptionChoice("", Strings.OptionLaunchProfileNone) { Description = Strings.OptionLaunchProfileNoneDescription },
+                        .. project.LaunchProfiles.Select(p => new OptionChoice(p, p)),
+                    ],
                     VisibleWhen = visible,
-                    Description = "A profile from Properties/launchSettings.json, with its environment and URLs.",
+                    Description = Strings.OptionLaunchProfileDescription,
                 });
             }
         }
 
         list.Add(ConfigurationOption());
-        list.Add(new Option(Arguments, "Program arguments", OptionKind.List) { Placeholder = "Argument" });
+        list.Add(new Option(Arguments, Strings.OptionArguments, OptionKind.List) { Placeholder = Strings.OptionArgumentsPlaceholder });
         list.Add(EnvironmentOption());
-        list.Add(WorkingDirectoryOption("The project's folder"));
+        list.Add(WorkingDirectoryOption(Strings.OptionWorkingDirectoryProjectFolder));
         list.Add(SdkOption());
         return new OptionSet(list);
     }

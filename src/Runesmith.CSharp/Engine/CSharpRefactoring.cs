@@ -21,7 +21,7 @@ internal static class CSharpRefactoring
             return null;
 
         if (!symbol.Locations.Any(location => location.IsInSource))
-            throw new AnalyzerRefusalException($"{symbol.Name} is defined in a library, so it cannot be renamed.");
+            throw new AnalyzerRefusalException(Strings.RenameInLibrary(symbol.Name));
 
         return new RenameSite(new TextSpan(token.Span.Start, token.Span.Length), token.ValueText);
     }
@@ -31,7 +31,7 @@ internal static class CSharpRefactoring
         Func<string, int?> versionOf, CancellationToken cancellationToken)
     {
         if (!SyntaxFacts.IsValidIdentifier(newName) && !(newName.StartsWith('@') && SyntaxFacts.IsValidIdentifier(newName[1..])))
-            throw new AnalyzerRefusalException($"\"{newName}\" is not a valid C# name.");
+            throw new AnalyzerRefusalException(Strings.RenameInvalidName(newName));
 
         if (await FindAsync(document, offset, cancellationToken).ConfigureAwait(false) is not var (_, symbol) || !symbol.Locations.Any(l => l.IsInSource))
             return [];

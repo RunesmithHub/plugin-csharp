@@ -34,7 +34,7 @@ public sealed class DotnetSdkProvider : ISdkProvider
 
     public string Kind => SdkKind;
 
-    public string Name => ".NET SDK";
+    public string Name => Strings.DotnetSdk;
 
     public Task<IReadOnlyList<InstalledSdk>> FindInstalledAsync(CancellationToken cancellationToken) =>
         Task.Run(() => DotnetSdkLocator.Find(environment), cancellationToken);
@@ -64,9 +64,9 @@ public sealed class DotnetSdkProvider : ISdkProvider
         try
         {
             if (!DotnetSdkLocator.SdkVersions(unpacked).Contains(release.Version, StringComparer.Ordinal))
-                throw new InvalidDataException($"The download does not contain the .NET SDK {release.Version}.");
+                throw new InvalidDataException(Strings.SdkDownloadIncomplete(release.Version));
 
-            progress.Report(new SdkInstallProgress("Installing", null));
+            progress.Report(new SdkInstallProgress(Strings.ProgressInstalling, null));
             Directory.CreateDirectory(environment.ManagedRoot);
             await Task.Run(() => DotnetRootMerger.Merge(unpacked, environment.ManagedRoot), CancellationToken.None).ConfigureAwait(false);
         }
@@ -88,7 +88,7 @@ public sealed class DotnetSdkProvider : ISdkProvider
         ArgumentNullException.ThrowIfNull(sdk);
         var root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(environment.ManagedRoot));
         if (sdk.Kind != SdkKind || sdk.Source != SdkSource.Managed || !string.Equals(Path.TrimEndingDirectorySeparator(Path.GetFullPath(sdk.Path)), root, PathComparison))
-            throw new InvalidOperationException($"Runesmith did not install the .NET SDK {sdk.Version} at {sdk.Path}, so it does not remove it.");
+            throw new InvalidOperationException(Strings.SdkNotManaged(version: sdk.Version, path: sdk.Path));
 
         return Task.Run(() =>
         {

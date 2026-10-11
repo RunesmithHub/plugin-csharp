@@ -24,7 +24,7 @@ internal static class Checksums
         {
             var hash = await CryptographicOperations.HashDataAsync(name, stream, cancellationToken).ConfigureAwait(false);
             if (!Convert.ToHexString(hash).Equals(expected, StringComparison.OrdinalIgnoreCase))
-                throw new InvalidDataException($"The download does not match its published {name.Name} checksum, so it was not installed.");
+                throw new InvalidDataException(Strings.SdkChecksumMismatch(name.Name ?? ""));
         }
     }
 

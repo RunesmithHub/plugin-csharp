@@ -45,15 +45,14 @@ public sealed class DotnetDebugEngine : IDebugAdapterProvider
     public async Task<DebugAdapterDescriptor> CreateAdapterAsync(DebugAdapterContext context, CancellationToken cancellationToken)
     {
         var asset = assets.FirstOrDefault(a => a.Rid == rid)
-            ?? throw new InvalidOperationException(
-                $"netcoredbg, the .NET debugger, has no build for {rid}. Debugging .NET works on Linux x64 and Arm64, Windows x64 and macOS on Apple silicon.");
+            ?? throw new InvalidOperationException(Strings.DebuggerUnsupported(rid));
         var folder = storage?.GetFolder() ?? throw new InvalidOperationException("Runesmith gave the C# plugin no storage folder to keep netcoredbg in.");
         var installer = new NetcoredbgInstaller(http, Path.Combine(folder, "tools", "netcoredbg"));
         if (installer.IsInstalled(asset))
             return Adapter(installer.ExecutableOf(asset));
 
         using var cancel = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        using var task = tasks?.Start($"Downloading netcoredbg {NetcoredbgRelease.Version}", cancel.Cancel);
+        using var task = tasks?.Start(Strings.DebuggerDownloading(NetcoredbgRelease.Version), cancel.Cancel);
         var progress = new Progress(task);
         try
         {
@@ -61,8 +60,7 @@ public sealed class DotnetDebugEngine : IDebugAdapterProvider
         }
         catch (Exception exception) when (exception is HttpRequestException or InvalidDataException or IOException or UnauthorizedAccessException)
         {
-            throw new InvalidOperationException(
-                $"Runesmith could not download netcoredbg {NetcoredbgRelease.Version}, the .NET debugger, from GitHub: {exception.Message}", exception);
+            throw new InvalidOperationException(Strings.DebuggerDownloadFailed(version: NetcoredbgRelease.Version, reason: exception.Message), exception);
         }
     }
 

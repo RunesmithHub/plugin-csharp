@@ -21,9 +21,9 @@ internal static class SdkDownloads
         try
         {
             await DownloadAsync(http, release.Download, archive, release.Size, progress, cancellationToken).ConfigureAwait(false);
-            progress.Report(new SdkInstallProgress("Verifying", null));
+            progress.Report(new SdkInstallProgress(Strings.ProgressVerifying, null));
             await Checksums.VerifyAsync(archive, release.Checksum, release.ChecksumAlgorithm, cancellationToken).ConfigureAwait(false);
-            progress.Report(new SdkInstallProgress("Unpacking", null));
+            progress.Report(new SdkInstallProgress(Strings.ProgressUnpacking, null));
             await Task.Run(() => SdkArchives.Extract(archive, unpacked, cancellationToken), cancellationToken).ConfigureAwait(false);
             return unpacked;
         }
@@ -66,7 +66,7 @@ internal static class SdkDownloads
                 var buffer = new byte[BufferSize];
                 long received = 0;
                 var reported = -1.0;
-                progress.Report(new SdkInstallProgress("Downloading", total is > 0 ? 0 : null));
+                progress.Report(new SdkInstallProgress(Strings.ProgressDownloading, total is > 0 ? 0 : null));
                 int read;
                 while ((read = await source.ReadAsync(buffer, cancellationToken).ConfigureAwait(false)) > 0)
                 {
@@ -79,7 +79,7 @@ internal static class SdkDownloads
                     if (fraction - reported >= 0.005)
                     {
                         reported = fraction;
-                        progress.Report(new SdkInstallProgress("Downloading", fraction));
+                        progress.Report(new SdkInstallProgress(Strings.ProgressDownloading, fraction));
                     }
                 }
             }
