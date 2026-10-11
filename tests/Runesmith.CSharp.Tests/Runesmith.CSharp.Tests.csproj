@@ -20,5 +20,7 @@
     <PackageReference Include="Runesmith.Sdk" />
     <PackageReference Include="Runesmith.Text" />
     <PackageReference Include="Runesmith.LanguageServices" />
+    <PackageReference Include="System.Composition.Hosting" />
+    <PackageReference Include="System.Composition.TypedParts" />
   </ItemGroup>
 </Project>

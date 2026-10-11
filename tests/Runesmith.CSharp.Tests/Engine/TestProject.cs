@@ -94,6 +94,10 @@ internal sealed class TestProject : IAsyncDisposable
 
     public TextSnapshot Snapshot(string path) => open[FullPath(path)];
 
+    /// <summary>Gets the compiler's document of a file: of its open text, or of the file on disk when it is not open.</summary>
+    public async Task<Microsoft.CodeAnalysis.Document> DocumentAsync(string path) =>
+        await Analyzer.FindAsync(FullPath(path), open.GetValueOrDefault(FullPath(path))) ?? throw new InvalidOperationException($"No project has {path}.");
+
     public Task<CompletionResult> CompleteAsync(string path, int offset, CompletionTriggerKind trigger = CompletionTriggerKind.Invoked, char? character = null) =>
         Host.CompleteAsync(FullPath(path), Snapshot(path), offset, trigger, character, TestContext.Current.CancellationToken);
 

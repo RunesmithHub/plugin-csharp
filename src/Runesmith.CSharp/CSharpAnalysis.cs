@@ -5,6 +5,7 @@ using Runesmith.LanguageServices;
 namespace Runesmith.CSharp;
 
 /// <summary>Runesmith's own C# analyzer, on the C# compiler: completion, hover, go to definition, signature help and problems.</summary>
+[Export]
 [Shared]
 public sealed class CSharpAnalysis
 {

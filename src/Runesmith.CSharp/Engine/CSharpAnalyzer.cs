@@ -55,6 +55,9 @@ public sealed class CSharpAnalyzer : ILanguageAnalyzer, ICodeActionAnalyzer, IRe
     /// <summary>Gets how many speculated member lists were taken when their <c>.</c> was typed.</summary>
     internal int SpeculationsUsed => completion.SpeculationsUsed;
 
+    /// <summary>Raised, on a background thread, when the solution is replaced, such as when the folder's projects finish loading.</summary>
+    internal event Action? SolutionReplaced;
+
     /// <summary>Gets a task that completes when the projects of the open folder are loaded.</summary>
     internal Task Loaded { get; private set; } = Task.CompletedTask;
 
@@ -201,6 +204,21 @@ public sealed class CSharpAnalyzer : ILanguageAnalyzer, ICodeActionAnalyzer, IRe
         workspace?.Dispose();
     }
 
+    /// <summary>Gets the document of a file for a snapshot of its text, or its newest version without one; null when no project has the
+    /// file.</summary>
+    internal async ValueTask<Document?> FindAsync(string path, Runesmith.Text.TextSnapshot? snapshot)
+    {
+        await created.ConfigureAwait(false);
+        return documents.Find(path, snapshot);
+    }
+
+    /// <summary>Gets the solution as it is now, once the workspace is created.</summary>
+    internal async ValueTask<Solution> GetSolutionAsync()
+    {
+        await created.ConfigureAwait(false);
+        return documents.Solution;
+    }
+
     private async ValueTask<Document?> GetAsync(SourceDocument document)
     {
         await created.ConfigureAwait(false);
@@ -214,6 +232,7 @@ public sealed class CSharpAnalyzer : ILanguageAnalyzer, ICodeActionAnalyzer, IRe
         documents.Replace(solution);
         if (previous is not null && !ReferenceEquals(previous, next))
             previous.Dispose();
+        SolutionReplaced?.Invoke();
     }
 
     // After typing a separator, the next word most likely starts right after it; its list is computed before its first letter is typed.

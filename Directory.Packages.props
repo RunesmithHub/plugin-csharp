@@ -3,14 +3,14 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <!-- Versions listed here also apply to packages that come in transitively, so they match the ones Runesmith loads. -->
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
-    <AvaloniaVersion>12.1.3</AvaloniaVersion>
+    <AvaloniaVersion>12.1.4</AvaloniaVersion>
     <RoslynVersion>5.9.0</RoslynVersion>
   </PropertyGroup>
   <ItemGroup Label="Runesmith">
-    <PackageVersion Include="Runesmith.Sdk" Version="0.1.1" />
-    <PackageVersion Include="Runesmith.Text" Version="0.1.1" />
-    <PackageVersion Include="Runesmith.LanguageServices" Version="0.1.1" />
-    <PackageVersion Include="HammerUI" Version="0.1.0" />
+    <PackageVersion Include="Runesmith.Sdk" Version="0.1.2" />
+    <PackageVersion Include="Runesmith.Text" Version="0.1.2" />
+    <PackageVersion Include="Runesmith.LanguageServices" Version="0.1.2" />
+    <PackageVersion Include="HammerUI" Version="0.1.1" />
   </ItemGroup>
   <ItemGroup Label="User interface">
     <PackageVersion Include="Avalonia" Version="$(AvaloniaVersion)" />
