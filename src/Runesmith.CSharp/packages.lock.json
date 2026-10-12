@@ -66,7 +66,7 @@
         "type": "Direct",
         "requested": "[0.1.4, )",
         "resolved": "0.1.4",
-        "contentHash": "XiTSLttePgFjVzlan0Gf4roebsTRJV4ZEGgPbTwOPq/UghPo5VwHcrkAF07SKi0ADTiJHsX/gmENqFOydhwlRQ==",
+        "contentHash": "xAYkvhCEn5jiGhmqZFWqMHC6LFmPpamqg9BlQj3KnAmPHSpO7qRafg2nePJfDOYpuxKUCzmQBcrwYx7PYVsDZw==",
         "dependencies": {
           "Runesmith.Text": "0.1.4"
         }
@@ -75,7 +75,7 @@
         "type": "Direct",
         "requested": "[0.1.4, )",
         "resolved": "0.1.4",
-        "contentHash": "++LtekedF4uNJ9hGeUZFwZxOn/khC1gZzBm5F4zjjlgUdIkZX5o3uVsYlDrwAmPME+u6/eTRlrH55vxj+Z/1fA==",
+        "contentHash": "w1rpXc0TitbjQgQ38L270rX3wpf0F/MYGJe8CFeL2k8iz5pm4C2r/KS1AFB+B2D7RT3SUZ6JJ7zLR1jZ3ehupA==",
         "dependencies": {
           "Avalonia": "12.1.4",
           "Avalonia.Fonts.Inter": "12.1.4",
@@ -88,7 +88,7 @@
         "type": "Direct",
         "requested": "[0.1.4, )",
         "resolved": "0.1.4",
-        "contentHash": "wdR2ByjdS+ONPiC/LOuDQJP4hEDURUyp71XZDv6zUQcacvdOlBOutvP+e0xgG2qppLjtQAhScxxsA6I8vne/bA=="
+        "contentHash": "4yiXxh2zedUwecFC6VM7Az2LoleE0orzKwhRgcboDlrvyZu8DuvwPqAryAvzi55cPWfh6O2KWJ4Jzauov7dR2A=="
       },
       "Avalonia.BuildServices": {
         "type": "Transitive",
@@ -293,7 +293,7 @@
         "type": "CentralTransitive",
         "requested": "[0.1.1, )",
         "resolved": "0.1.1",
-        "contentHash": "tC54MTEwHF3pSSqY9k8x86rxOYZrWycz8BWk9sqyzZPsnTqyeKw9Iia6qKjqZ00E6+BkhzWWf0bOwksATtePgA==",
+        "contentHash": "ibUcTm3tqUY9vUxs8lfVMW38l8VxgplkrFaJQUwXk4AAPvsvKGFuTNlHo3ENH2b1cJtxt+ncigBJ9SnX2+U3hg==",
         "dependencies": {
           "Avalonia": "12.1.4",
           "Avalonia.Fonts.Inter": "12.1.4",
