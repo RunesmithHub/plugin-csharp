@@ -7,9 +7,9 @@
     <RoslynVersion>5.9.0</RoslynVersion>
   </PropertyGroup>
   <ItemGroup Label="Runesmith">
-    <PackageVersion Include="Runesmith.Sdk" Version="0.1.2" />
-    <PackageVersion Include="Runesmith.Text" Version="0.1.2" />
-    <PackageVersion Include="Runesmith.LanguageServices" Version="0.1.2" />
+    <PackageVersion Include="Runesmith.Sdk" Version="0.1.4" />
+    <PackageVersion Include="Runesmith.Text" Version="0.1.4" />
+    <PackageVersion Include="Runesmith.LanguageServices" Version="0.1.4" />
     <PackageVersion Include="HammerUI" Version="0.1.1" />
   </ItemGroup>
   <ItemGroup Label="User interface">

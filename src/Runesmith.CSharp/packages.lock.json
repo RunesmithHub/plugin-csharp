@@ -64,31 +64,31 @@
       },
       "Runesmith.LanguageServices": {
         "type": "Direct",
-        "requested": "[0.1.2, )",
-        "resolved": "0.1.2",
-        "contentHash": "08JDAn2TclwZRrwGn2V6FoW6YlUGF1hEW2k7iFDMNm/aKV2BiRaeGRxFZlzpNBGaVEe2BM3GNM76DzEpcjBVcA==",
+        "requested": "[0.1.4, )",
+        "resolved": "0.1.4",
+        "contentHash": "XiTSLttePgFjVzlan0Gf4roebsTRJV4ZEGgPbTwOPq/UghPo5VwHcrkAF07SKi0ADTiJHsX/gmENqFOydhwlRQ==",
         "dependencies": {
-          "Runesmith.Text": "0.1.2"
+          "Runesmith.Text": "0.1.4"
         }
       },
       "Runesmith.Sdk": {
         "type": "Direct",
-        "requested": "[0.1.2, )",
-        "resolved": "0.1.2",
-        "contentHash": "P7Ydmrbyv8941SkWBEBOozPnICh3Rza+mzl+iCOwHVDMLrPO1dwXiCBNPZwIt+bpQfHeAJOcMfcYHu8fKUuUMA==",
+        "requested": "[0.1.4, )",
+        "resolved": "0.1.4",
+        "contentHash": "++LtekedF4uNJ9hGeUZFwZxOn/khC1gZzBm5F4zjjlgUdIkZX5o3uVsYlDrwAmPME+u6/eTRlrH55vxj+Z/1fA==",
         "dependencies": {
           "Avalonia": "12.1.4",
           "Avalonia.Fonts.Inter": "12.1.4",
           "HammerUI": "0.1.1",
-          "Runesmith.Text": "0.1.2",
+          "Runesmith.Text": "0.1.4",
           "System.Composition.AttributedModel": "10.0.12"
         }
       },
       "Runesmith.Text": {
         "type": "Direct",
-        "requested": "[0.1.2, )",
-        "resolved": "0.1.2",
-        "contentHash": "wphL/IOLZTHc2qtxwHwNQ54kl/GS2pTBJiKueUkawtkwclSTdMxTLCZcqalmD20l+6CCvliFytaVLGRJfB6gAA=="
+        "requested": "[0.1.4, )",
+        "resolved": "0.1.4",
+        "contentHash": "wdR2ByjdS+ONPiC/LOuDQJP4hEDURUyp71XZDv6zUQcacvdOlBOutvP+e0xgG2qppLjtQAhScxxsA6I8vne/bA=="
       },
       "Avalonia.BuildServices": {
         "type": "Transitive",
@@ -293,7 +293,7 @@
         "type": "CentralTransitive",
         "requested": "[0.1.1, )",
         "resolved": "0.1.1",
-        "contentHash": "ibUcTm3tqUY9vUxs8lfVMW38l8VxgplkrFaJQUwXk4AAPvsvKGFuTNlHo3ENH2b1cJtxt+ncigBJ9SnX2+U3hg==",
+        "contentHash": "tC54MTEwHF3pSSqY9k8x86rxOYZrWycz8BWk9sqyzZPsnTqyeKw9Iia6qKjqZ00E6+BkhzWWf0bOwksATtePgA==",
         "dependencies": {
           "Avalonia": "12.1.4",
           "Avalonia.Fonts.Inter": "12.1.4",
