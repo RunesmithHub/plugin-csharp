@@ -82,7 +82,8 @@ internal static class DotnetRunOptions
     /// <summary>Gets the host's environment with the configuration's variables over it.</summary>
     public static Dictionary<string, string> EnvironmentOf(OptionValues values, DotnetHost host)
     {
-        var environment = new Dictionary<string, string>(host.Environment, StringComparer.Ordinal);
+        // .NET programs write their console colors as escape sequences to the Run console only when told to.
+        var environment = new Dictionary<string, string>(host.Environment, StringComparer.Ordinal) { ["DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION"] = "1" };
         foreach (var (name, value) in values.GetPairs(Environment))
         {
             if (name.Trim().Length > 0)

@@ -36,6 +36,11 @@ public sealed class DotnetSdkProvider : ISdkProvider
 
     public string Name => Strings.DotnetSdk;
 
+    // Every .NET SDK comes from Microsoft, so there is no vendor to choose and an SDK is named by its version.
+    public bool HasVendors => false;
+
+    public string? DownloadDescription => Strings.DotnetSdkSource;
+
     public Task<IReadOnlyList<InstalledSdk>> FindInstalledAsync(CancellationToken cancellationToken) =>
         Task.Run(() => DotnetSdkLocator.Find(environment), cancellationToken);
 

@@ -17,6 +17,10 @@
     <!-- Its build host, which loads projects for the analyzer, is content that only a direct reference copies to the output. -->
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" />
   </ItemGroup>
+  <!-- The TextMate grammars ship as files beside the assembly, where CSharpLanguage and GrammarFiles find them. -->
+  <ItemGroup>
+    <None Include="grammars\**\*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Runesmith.CSharp.Tests" />
   </ItemGroup>

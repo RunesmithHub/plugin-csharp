@@ -30,31 +30,31 @@
       },
       "Runesmith.LanguageServices": {
         "type": "Direct",
-        "requested": "[0.1.4, )",
-        "resolved": "0.1.4",
-        "contentHash": "xAYkvhCEn5jiGhmqZFWqMHC6LFmPpamqg9BlQj3KnAmPHSpO7qRafg2nePJfDOYpuxKUCzmQBcrwYx7PYVsDZw==",
+        "requested": "[0.2.0, )",
+        "resolved": "0.2.0",
+        "contentHash": "g6NFdDspwpLm3+5VyxlwFbddGWrevaDyGBUiacoqyUA2KL5RoUUovPTy7DZCdAHG7D7fCc99U0bVkdplnF+u4w==",
         "dependencies": {
-          "Runesmith.Text": "0.1.4"
+          "Runesmith.Text": "0.2.0"
         }
       },
       "Runesmith.Sdk": {
         "type": "Direct",
-        "requested": "[0.1.4, )",
-        "resolved": "0.1.4",
-        "contentHash": "w1rpXc0TitbjQgQ38L270rX3wpf0F/MYGJe8CFeL2k8iz5pm4C2r/KS1AFB+B2D7RT3SUZ6JJ7zLR1jZ3ehupA==",
+        "requested": "[0.2.0, )",
+        "resolved": "0.2.0",
+        "contentHash": "iDjxhU1Io8794T+lS6w25BamFvLCfm4CWEZCGwLRnmURlkrcZrO12NMZrfBiguenKeCv/qvWWLC+PhDdQo81/A==",
         "dependencies": {
           "Avalonia": "12.1.4",
           "Avalonia.Fonts.Inter": "12.1.4",
           "HammerUI": "0.1.1",
-          "Runesmith.Text": "0.1.4",
+          "Runesmith.Text": "0.2.0",
           "System.Composition.AttributedModel": "10.0.12"
         }
       },
       "Runesmith.Text": {
         "type": "Direct",
-        "requested": "[0.1.4, )",
-        "resolved": "0.1.4",
-        "contentHash": "4yiXxh2zedUwecFC6VM7Az2LoleE0orzKwhRgcboDlrvyZu8DuvwPqAryAvzi55cPWfh6O2KWJ4Jzauov7dR2A=="
+        "requested": "[0.2.0, )",
+        "resolved": "0.2.0",
+        "contentHash": "kH6PGoaEYbYcCERVVoqMfZTnsziJyRB2j8AusN7c9d6gH3mxNChxguuNXGPrLqEvQK+6VPC4RX7UiKjsDGdyIw=="
       },
       "System.Composition.Hosting": {
         "type": "Direct",
@@ -417,10 +417,10 @@
           "Microsoft.CodeAnalysis.CSharp.Features": "[5.9.0, )",
           "Microsoft.CodeAnalysis.CSharp.Workspaces": "[5.9.0, )",
           "Microsoft.CodeAnalysis.Workspaces.MSBuild": "[5.9.0, )",
-          "Runesmith.CSharp.Contracts": "[0.1.4, )",
-          "Runesmith.LanguageServices": "[0.1.4, )",
-          "Runesmith.Sdk": "[0.1.4, )",
-          "Runesmith.Text": "[0.1.4, )"
+          "Runesmith.CSharp.Contracts": "[0.2.0, )",
+          "Runesmith.LanguageServices": "[0.2.0, )",
+          "Runesmith.Sdk": "[0.2.0, )",
+          "Runesmith.Text": "[0.2.0, )"
         }
       },
       "runesmith.csharp.contracts": {
