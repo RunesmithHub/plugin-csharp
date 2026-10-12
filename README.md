@@ -5,6 +5,8 @@ The official C# plugin for [Runesmith](https://github.com/RunesmithHub/Runesmith
 - C# highlighting for `.cs` and `.csx` files;
 - completion, hover, go to definition, signature help, problems, quick fixes, rename, formatting and inlay hints from Runesmith's own C#
   analyzer, built on the C# compiler and shipped with the plugin;
+- completion that inserts the parentheses a call needs, such as after a method's name or a type after `new`, with the caret between them
+  when the call takes arguments;
 - find references, go to implementation, the occurrences of the name under the caret, the outline and breadcrumbs, go to symbol in the
   file and in the folder, folding, expand selection, call and type hierarchies, and names colored by what they mean;
 - **Build** with `dotnet build`, with every error and warning in the **Problems** panel;
