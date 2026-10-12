@@ -1,0 +1,193 @@
+---
+title: C# support
+description: "How Runesmith edits, builds, runs and debugs C#: highlighting, Runesmith's own C# analyzer on the C# compiler, building with dotnet build, run configurations and debugging with netcoredbg."
+---
+
+Runesmith supports C# through an official plugin you install from the plugin hub, `runesmith.csharp`, developed in
+[RunesmithHub/plugin-csharp](https://github.com/RunesmithHub/plugin-csharp). It highlights `.cs` and `.csx` files, gives completion, hover,
+go to definition, signature help, problems, quick fixes, rename, formatting and inlay hints from Runesmith's own C# analyzer, builds
+solutions and projects with `dotnet build` and debugs .NET projects with netcoredbg. This page covers what the analyzer does, how it
+finds your projects, how fast it is and what it does not do yet.
+
+## Set up
+
+Beyond the plugin, there is nothing to install for completion and the other language features: the analyzer is built on the C# compiler
+(Roslyn 5.9), ships with the plugin and runs inside Runesmith.
+
+<Steps>
+
+1. Install the **C#** plugin: open **Tools › Plugins**, find **C#** in **Browse** and click **Install**, or start from its page on
+   [hub.runesmith.dev](https://hub.runesmith.dev). Restart Runesmith when it offers to. When you open a C# file without the plugin,
+   Runesmith offers it in a line over the editor, whose **Install** opens the plugin's page.
+2. Install the [.NET SDK](https://dot.net), or download one in **File › SDKs...**. The analyzer needs it to load your projects, and
+   **Build** needs `dotnet` on the `PATH` or a default SDK that Runesmith installed.
+3. Open a folder with a solution or project in Runesmith and open a `.cs` file.
+
+</Steps>
+
+## Features
+
+| Feature | How to use it |
+| --- | --- |
+| Completion | Shows while you type, after a `.`, or with <Keys>Ctrl+Space</Keys>. The selected suggestion shows its documentation. Accepting a method, or a type after `new`, inserts the parentheses the call needs, with the caret between them when it takes arguments; a generic type gets a place for its type arguments first. Where a method group may stand, such as in `nameof(...)`, after `+=` on an event or where a delegate is expected, only the name is inserted. |
+| Signature help | Shows when you type `(` or `,` in a call. |
+| Hover | Rest the pointer on a symbol to see its signature and documentation. |
+| Go to definition | <Keys>F12</Keys>, or <Keys>Ctrl</Keys>+click a symbol declared in your source. |
+| Problems | The compiler's own errors and warnings, underlined in the editor and listed in the **Problems** panel as `csharp` with their code, such as `CS0103`. |
+| Quick fixes and refactorings | The light bulb shows on a line with a problem the compiler can fix, such as a missing `using`. <Keys>Alt+Enter</Keys> lists the fixes and the compiler's refactorings for the line or selection. |
+| Rename | <Keys>F2</Keys> on a symbol declared in your source renames it in every file of the solution. |
+| Formatting | **Format Document** (<Keys>Shift+Alt+F</Keys>) and **Format Selection** format with the compiler's formatter, indenting with the editor's tab size and spaces or tabs. |
+| Inlay hints | The names of the parameters that literal arguments go to, such as `count:` before `1`, and the types of variables declared with `var`. Turn them off with **Inlay hints** (`editor.inlayHints`). |
+| Find references | <Keys>Shift+F12</Keys> lists every use of the symbol at the caret in the solution in the **References** panel. A use through an interface member or an override counts. |
+| Go to implementation | <Keys>Ctrl+F12</Keys> goes to the types that implement an interface or derive from a class, and to the members that implement or override a member. |
+| Occurrences | The other uses of the symbol under the caret are highlighted in the file, the ones that write it in another shade. |
+| Outline and breadcrumbs | The **Outline** panel and the breadcrumbs show the file's namespaces, types and members. <Keys>Ctrl+R</Keys> goes to one by name, and <Keys>Ctrl+Shift+R</Keys> to a type or member anywhere in the solution. |
+| Folding | Types, members, blocks, `using` directives, regions and comments of several lines fold. A line that goes on after a block, such as `} else {`, stays visible. |
+| Expand selection | <Keys>Shift+Alt+Right</Keys> grows the selection from the word to its expression, statement, block and member; <Keys>Shift+Alt+Left</Keys> shrinks it back. |
+| Call and type hierarchy | <Keys>Ctrl+Alt+H</Keys> shows who calls a method and what it calls; <Keys>Ctrl+Alt+Shift+H</Keys> shows the types above and below a type. Both are in the **Hierarchy** panel. |
+| Semantic highlighting | Names are colored by what they mean: classes, interfaces, structs and enums apart, as are parameters, locals and static members. Turn it off with **Semantic highlighting** (`editor.semanticHighlighting`). |
+
+## C# versions
+
+The analyzer supports every C# version up to C# 14. It respects each project's `LangVersion`, so a feature newer than the project's
+version is reported as an error, as the compiler reports it when building.
+
+## Projects
+
+The analyzer loads your projects in the background when you open a folder, so the editor never waits for it. It looks at the top of the
+open folder for a solution, and loads the first it finds:
+
+1. a `.slnx` file;
+2. else a `.sln` file;
+3. else every `.csproj` file in the folder and its subfolders, up to three levels deep, skipping folders such as `bin`, `obj`, `.git` and
+   `node_modules`.
+
+Loading uses MSBuild, so it needs the .NET SDK installed, as building does. The **Language analyzers** channel of the **Output** panel
+shows which solution or projects loaded, how long it took, and why a project failed to load. Project files are read when the folder
+opens; the analyzer does not watch them for changes.
+
+A solution file below the top of the folder is not used, and projects more than three levels down are not found. Open the folder that
+holds the solution, or one closer to the projects.
+
+### Files outside projects
+
+A C# file that belongs to no loaded project, or that you open before the projects finish loading, gets a project of its own. That project
+uses the newest C# version, the .NET reference assemblies, and the global usings of a console app (`System`, `System.Collections.Generic`,
+`System.IO`, `System.Linq`, `System.Net.Http`, `System.Threading` and `System.Threading.Tasks`), so a lone file gets completion and
+problems right away. Problems that only say the files are not a complete program, such as a missing `Main` method, are left out.
+
+## Performance
+
+Completion asks the compiler once per word and filters that list as the word grows, so typing more of a word does not ask again. The
+analyzer also works ahead of you: after you type a separator, such as a space, `(` or `=`, it computes the list for the next word before its
+first letter, and while you type a name it computes the members that a `.` after it would show.
+
+Problems are checked in the background. Typing pauses the check, and it runs again when typing pauses.
+
+| Measurement | p95 |
+| --- | ---: |
+| Completion at the start of a word, measured directly on the Runesmith solution | under 5 ms |
+| Completion after a `.`, measured directly on the Runesmith solution | 13 ms |
+| Suggestions shown in the editor while typing, in the typing benchmark | about 36 ms |
+
+[Language services](/developers/language-services) describes how these are measured, and how to run the typing benchmark.
+
+## Limitations
+
+- Suggestions that expand into more than their label, such as completing an `override` with its whole method, insert only the label.
+- Go to definition finds symbols declared in source; symbols from a library or the .NET reference assemblies have no location to go to.
+- Problems are the compiler's own. Code style rules and analyzers that a project references are not run.
+- Fixes and refactorings that add, move or delete files, such as generating a class in a new file, are listed but not applied yet: picking
+  one says so and changes nothing.
+- Fixes and refactorings whose providers need services of a full development environment, such as installing packages, are left out.
+
+## Build
+
+**Build › Build** runs `dotnet build` on the open folder. It builds the first `.slnx` file at the top of the folder, or else the first
+`.sln`, `.csproj` or `.fsproj` file. The build's output goes to the **Output** panel, and every error and warning appears in the
+**Problems** panel with its file, line and code, such as `CS0103`, as soon as the compiler reports it. **Build › Cancel Build** stops the
+build.
+
+Errors without a file, such as a missing project, are listed on the solution or project being built.
+
+## Run configurations
+
+The plugin adds three kinds of run configuration. When you open a folder, it finds the projects in it (up to six folders deep, skipping
+`bin`, `obj` and hidden folders) and makes a configuration for each one, so most folders run without setup. [Running](/guide/running)
+covers the run widget, the **Run** panel and **Run › Edit Configurations...**.
+
+| Kind | Found for | What it runs |
+| --- | --- | --- |
+| **.NET project** | Each project whose `OutputType` is `Exe` or `WinExe`, or that uses the web or worker SDK | `dotnet run --project <project> --no-build -c <configuration> -f <framework>`, with the launch profile and the arguments after `--` |
+| **.NET tests** | Each project that sets `IsTestProject` or references xUnit, NUnit, MSTest or `Microsoft.NET.Test.Sdk` | `dotnet test <project> --no-build -c <configuration>`, with `--filter` when you set one |
+| **.NET command** | Never; you add it | Any `dotnet` command line, such as `format` or `ef database update`, in the open folder |
+
+A **.NET project** configuration has these settings:
+
+| Setting | Meaning |
+| --- | --- |
+| **Project** | The project to run, from the projects found in the folder. |
+| **Target framework** | One of the project's `TargetFramework` or `TargetFrameworks`; **Project default** is the first. |
+| **Launch profile** | A profile from `Properties/launchSettings.json` whose `commandName` is `Project`, with its environment and URLs, or **None**. |
+| **Configuration** | **Debug** or **Release**. |
+| **Program arguments** | One argument per row, passed to the program as they are. |
+| **Environment variables** | Names and values set for the program, over Runesmith's own environment. |
+| **Working directory** | Where the program starts; the project's folder when empty. |
+| **.NET SDK** | The SDK whose `dotnet` runs it; empty uses the default SDK. An SDK with its own `dotnet` runs with `DOTNET_ROOT` set to its folder. |
+
+The **Build** step before a .NET project or tests configuration builds only that project, with `dotnet build` and the same configuration
+and framework, and its errors and warnings appear in the **Problems** panel as a folder build's do. A **.NET command** builds the folder.
+
+## Debugging
+
+**Debug** on a **.NET project** configuration builds the project and starts the built assembly,
+`bin/<configuration>/<framework>/<assembly>.dll`, under [netcoredbg](https://github.com/Samsung/netcoredbg), Samsung's open source .NET
+debugger, with the configuration's arguments, environment variables and working directory. The assembly runs with the `dotnet` of the
+configuration's **.NET SDK**, with `DOTNET_ROOT` set when that SDK has its own `dotnet`. [Debugging](/guide/debugging) covers breakpoints,
+stepping and the **Debug** panel. **.NET tests** and **.NET command** configurations cannot be debugged yet.
+
+The plugin does not ship netcoredbg. The first time you debug, it downloads netcoredbg 3.2.0-1092 from the project's GitHub release page,
+with its progress in the status bar, checks the download against the SHA-256 checksum the plugin pins for it, and keeps it in the plugin's
+storage folder, so later sessions start at once. The download comes from `github.com` and `release-assets.githubusercontent.com`.
+netcoredbg is MIT licensed; its license notice is in the plugin's
+[THIRD-PARTY-NOTICES.md](https://github.com/RunesmithHub/plugin-csharp/blob/main/THIRD-PARTY-NOTICES.md).
+
+netcoredbg has builds for Linux on x64 and Arm64, Windows on x64 and macOS on Apple silicon. On other computers, such as a Mac with an
+Intel processor, **Debug** says there is no build for it. When the download fails, the **Run** panel says why, and the next **Debug** tries
+again.
+
+## SDKs
+
+The plugin finds the .NET SDKs on your computer and downloads new ones from Microsoft's release metadata. **File › SDKs...** lists them,
+with their channel's updates, and installs SDKs side by side in Runesmith's own .NET folder, checking each download's SHA-512 checksum.
+When the default .NET SDK is one Runesmith installed, **Build** runs the `dotnet` of that folder. [SDKs](/guide/sdks) describes the page.
+
+## Templates
+
+**File › New Project** lists the project templates of every .NET SDK Runesmith finds and of every template package you installed with
+`dotnet new install`, so a package you install shows up the next time the dialog opens. They come from a separate plugin, **C# templates**
+(`runesmith.csharp-templates`, developed in
+[RunesmithHub/plugin-csharp-templates](https://github.com/RunesmithHub/plugin-csharp-templates)), which you install from the plugin hub as
+you install the C# plugin; turn it off in **Settings › Plugins** to hide them and keep the rest of C# support.
+
+The plugin reads the packages without unpacking them:
+
+- the SDK's own packages, in `templates/<version>` of each .NET root: the roots Runesmith's SDK list knows, `DOTNET_ROOT`, and the
+  folder of the `dotnet` on the `PATH`;
+- your installed packages, in `.templateengine/packages` of your home folder, or of `DOTNET_CLI_HOME` when it is set.
+
+Each template's `template.json` gives its name, description, language and parameters. A template that comes in C#, F# and Visual Basic
+shows once, with a **Language** choice. Its parameters become options: a choice becomes a drop-down, a `bool` a check box, a number a
+number field and text a text field, and the `Framework` parameter becomes **Target framework**. Parameters that `dotnet new --help` hides,
+such as port numbers, and **Skip restore** are left out. Item and solution templates are not listed; **Blank Solution** makes an empty
+`.slnx` solution.
+
+**Create** runs `dotnet new` with the template's short name, its language and the options you changed, using the **.NET SDK** you picked,
+and lets it restore the project. The project goes in a folder of its own, next to a `.slnx` solution that lists it. With **Put solution
+and project in the same directory**, the project is created directly in the new folder, without a solution.
+
+## Related
+
+- [Plugins](./index.mdx): how the C# plugin and yours are loaded.
+- [Language features](/guide/language-features): completion, hover and problems in the editor.
+- [Language services](/developers/language-services): how the analyzer runs, for contributors.

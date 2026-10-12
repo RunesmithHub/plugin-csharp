@@ -20,4 +20,9 @@ public sealed class CSharpLanguage
         Quotes = ['"', '\''],
         Icon = "file-code",
     };
+
+    /// <summary>The TextMate grammar that highlights C#, which ships beside the assembly.</summary>
+    [Export(typeof(GrammarDefinition))]
+    public GrammarDefinition Grammar { get; } = new("source.cs",
+        Path.Combine(Path.GetDirectoryName(typeof(CSharpLanguage).Assembly.Location) ?? "", "grammars", "csharp.tmLanguage.json"));
 }

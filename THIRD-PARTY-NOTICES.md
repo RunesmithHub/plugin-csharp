@@ -9,6 +9,7 @@ release.
 
 | Component | License | Used by |
 | --- | --- | --- |
+| The C#, Razor, F# and Visual Basic TextMate grammars, in `grammars`, as [TextMateSharp.Grammars](https://github.com/danipen/TextMateSharp) 2.0.4 carries them from [Visual Studio Code](https://github.com/microsoft/vscode/tree/main/extensions) | MIT | Syntax highlighting |
 | [Roslyn](https://github.com/dotnet/roslyn), the C# compiler: Microsoft.CodeAnalysis.CSharp.Features, Microsoft.CodeAnalysis.CSharp.Workspaces and Microsoft.CodeAnalysis.Workspaces.MSBuild 5.9.0 | MIT | The C# analyzer |
 | What Roslyn brings with it: [MSBuild](https://github.com/dotnet/msbuild)'s Microsoft.Build.Framework, [Humanizer](https://github.com/Humanizr/Humanizer), [Microsoft.DiaSymReader](https://github.com/dotnet/symreader), [Microsoft.VisualStudio.SolutionPersistence](https://github.com/microsoft/vs-solutionpersistence) and Microsoft.Extensions packages from the [.NET runtime](https://github.com/dotnet/runtime) | MIT | The C# analyzer |
 | [System.Composition](https://github.com/dotnet/runtime) 10.0.12 and the [.NET runtime](https://github.com/dotnet/runtime) | MIT | The C# analyzer's compiler services |

@@ -54,6 +54,8 @@ run-project-unreadable = The project { $project } could not be read.
 ## The .NET SDKs in Settings › SDKs.
 
 dotnet-sdk = .NET SDK
+# Shown under the title of the dialog that downloads a .NET SDK.
+dotnet-sdk-source = Releases from Microsoft. Runesmith installs .NET SDKs side by side in one folder, and global.json picks between them.
 # The steps of installing an SDK or the debugger, shown next to the progress bar.
 progress-downloading = Downloading
 progress-verifying = Verifying

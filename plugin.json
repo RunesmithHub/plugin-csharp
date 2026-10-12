@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "runesmith.csharp",
   "name": "C#",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "summary": "C# highlighting, completion, navigation and problems, building, running and debugging with dotnet, and SDK downloads.",
   "authors": [
     "Dylan de Beer"
@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "repository": "https://github.com/RunesmithHub/plugin-csharp",
   "homepage": "https://docs.runesmith.dev/plugins/csharp",
-  "runesmithApi": "^0.1.4",
+  "runesmithApi": "^0.2.0",
   "projects": {
     "contracts": "src/Runesmith.CSharp.Contracts/Runesmith.CSharp.Contracts.csproj",
     "implementation": "src/Runesmith.CSharp/Runesmith.CSharp.csproj"
@@ -55,9 +55,14 @@
   ],
   "keywords": [
     "csharp",
-    "dotnet",
-    "roslyn",
-    "debugger",
-    "netcoredbg"
+    "cs",
+    "csx",
+    "csproj",
+    "sln",
+    "slnx",
+    "razor",
+    "fs",
+    "vb",
+    "dotnet"
   ]
 }

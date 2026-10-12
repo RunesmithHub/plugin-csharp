@@ -2,7 +2,7 @@
 
 The official C# plugin for [Runesmith](https://github.com/RunesmithHub/Runesmith), `runesmith.csharp`. It adds:
 
-- C# highlighting for `.cs` and `.csx` files;
+- C# highlighting for `.cs` and `.csx` files, and highlighting for the other .NET languages: Razor, F# and Visual Basic;
 - completion, hover, go to definition, signature help, problems, quick fixes, rename, formatting and inlay hints from Runesmith's own C#
   analyzer, built on the C# compiler and shipped with the plugin;
 - completion that inserts the parentheses a call needs, such as after a method's name or a type after `new`, with the caret between them

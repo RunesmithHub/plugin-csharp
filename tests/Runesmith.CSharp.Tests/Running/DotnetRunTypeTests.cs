@@ -101,6 +101,7 @@ public sealed class DotnetRunTypeTests : IDisposable
         Assert.Equal(Path.Combine(root, "App"), plan.WorkingDirectory);
         Assert.Equal("hello", plan.Environment["GREETING"]);
         Assert.Equal("", plan.Environment["EMPTY"]);
+        Assert.Equal("1", plan.Environment["DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION"]);
         Assert.Null(plan.Debug);
     }
 
