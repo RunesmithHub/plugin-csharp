@@ -123,9 +123,10 @@ internal sealed class CSharpCompletion
             return null;
 
         var span = completions.Span.ToRunesmith();
+        var parentheses = await CSharpCallParentheses.ForAsync(document, completions.Span.Start, completions.Span.End, cancellationToken).ConfigureAwait(false);
         var candidates = new CompletionCandidate[completions.ItemsList.Count];
         for (var i = 0; i < candidates.Length; i++)
-            candidates[i] = ToCandidate(completions.ItemsList[i], new CompletionData(completions.ItemsList[i], document, span));
+            candidates[i] = ToCandidate(completions.ItemsList[i], document, span, parentheses);
         return new KeptList(span, candidates, character);
     }
 
@@ -204,7 +205,7 @@ internal sealed class CSharpCompletion
 
         var change = await service.GetChangeAsync(data.Document, data.Item, commitCharacter: null, cancellationToken).ConfigureAwait(false);
         var oldText = await data.Document.GetTextAsync(cancellationToken).ConfigureAwait(false);
-        var additional = AdditionalChanges(oldText, change.TextChanges, data.Span, entry.InsertText ?? entry.Label);
+        var additional = AdditionalChanges(oldText, change.TextChanges, data.Span, data.Inserted);
         return new CompletionDetails(detail.Length > 0 ? detail : null, string.IsNullOrEmpty(documentation) ? null : documentation, additional);
     }
 
@@ -238,19 +239,23 @@ internal sealed class CSharpCompletion
         return [new TextChange(replaced, newPrefix[head..^tail].ToString())];
     }
 
-    private static CompletionCandidate ToCandidate(RoslynCompletionItem item, CompletionData data)
+    private static CompletionCandidate ToCandidate(RoslynCompletionItem item, Document document, TextSpan span, CSharpCallParentheses parentheses)
     {
         var label = item.DisplayTextPrefix + item.DisplayText + item.DisplayTextSuffix;
         var insert = item.Properties.TryGetValue("InsertionText", out var insertion) ? insertion : item.DisplayText;
         var (kind, group) = Classify(item.Tags);
+        var snippet = parentheses.SnippetFor(item, insert);
         return new CompletionCandidate(
             label,
             kind,
             group,
             Detail: string.IsNullOrEmpty(item.InlineDescription) ? null : item.InlineDescription,
-            InsertText: insert == label ? null : insert,
+            InsertText: snippet ?? (insert == label ? null : insert),
             FilterText: item.FilterText == label ? null : item.FilterText,
-            Data: data);
+            Data: new CompletionData(item, document, span, insert))
+        {
+            IsSnippet = snippet is not null,
+        };
     }
 
     private static (CompletionKind Kind, byte Group) Classify(ImmutableArray<string> tags)
@@ -309,8 +314,9 @@ internal sealed class CSharpCompletion
         return end;
     }
 
-    /// <summary>What resolving a suggestion needs: the compiler's item and the document version it was made for.</summary>
-    internal sealed record CompletionData(RoslynCompletionItem Item, Document Document, TextSpan Span);
+    /// <summary>What resolving a suggestion needs: the compiler's item, the document version it was made for, and the name it inserts
+    /// without any parentheses.</summary>
+    internal sealed record CompletionData(RoslynCompletionItem Item, Document Document, TextSpan Span, string Inserted);
 
     /// <summary>A member list computed before its <c>.</c> was typed, and whether the next edit typed it.</summary>
     private sealed class Speculation(int position, int version, Task<KeptList?> list)
