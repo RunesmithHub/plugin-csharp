@@ -85,7 +85,7 @@ jobs:
 
       - name: Install the hub tool
         # The repository's NuGet configuration maps RunesmithHub.* to the hub feed; --add-source cannot be combined with that mapping.
-        run: dotnet tool install RunesmithHub.Tool --version 0.1.8 --tool-path "$RUNNER_TEMP/rshub"
+        run: dotnet tool install RunesmithHub.Tool --version 0.1.9 --tool-path "$RUNNER_TEMP/rshub"
 
       - name: Check the plugin as the hub does
         run: '"$RUNNER_TEMP/rshub/rshub" check .'
